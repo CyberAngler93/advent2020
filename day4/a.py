@@ -1,36 +1,24 @@
-
-import copy
 file = 'input.txt'
 
 
 def main():
-    key = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-    key = sorted(key)
-    valid = 0
-    with open(file, "r") as f:
-        content = f.read()
-        lines = content.splitlines()
-        data = []
+    with open(file, 'r') as f:
+        lines = f.readlines()
+        lines.append('\n')
+        data, temp = [], ''
         for line in lines:
-            stuff = line.split(" ")
-            data.append(stuff)
-            print(data)
-        raw_data = []
-        for lists in data:
-            if lists == ['']:
-                check_format = []
-                for stuff in raw_data:
-                    current = stuff.split(":")[0]
-                    if current != 'cid':
-                        check_format.append(current)
-                check_format = sorted(check_format)
-                if check_format == key:
-                    print(check_format)
-                    valid += 1
-                raw_data.clear()
+            if not line.strip() == '':
+                temp += '{} '.format(line.strip())
             else:
-                raw_data = raw_data + lists
-        print(valid)
+                data.append(temp[:-1])
+                temp = ''
+        answer = 0
+        for item in data:
+            if 'byr' in item and 'iyr' in item and 'eyr' in item and 'hgt' in item and 'hcl' in item and 'ecl' in item and 'pid' in item:
+                answer += 1
+
+        print(answer)
+    f.close()
 
 
 if __name__ == "__main__":

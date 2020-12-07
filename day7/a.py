@@ -6,22 +6,19 @@ file = "input.txt"
 def main():
     cleaned_bags = []
     gold_count = []
-    data, temp, lines = [], '', []
     with open(file, "r") as f:
-        for line in f:
-            lines.append(str(line).rstrip())
+        for item in f:
+            item = item.replace(" contain ", ",")
+            item = item.replace(".", "")
+            item = item.replace(" bags", "")
+            item = item.replace(" bag", "")
+            item = item.replace(", ", ",")
+            remove_digits = str.maketrans('', '', digits)
+            item = item.translate(remove_digits)
+            item = item.rstrip()
+            item = item.split(",")
+            cleaned_bags.append(item)
         f.close()
-    for item in lines:
-        item = item.replace(" contain ", ",")
-        item = item.replace(".", "")
-        item = item.replace(" bags", "")
-        item = item.replace(" bag", "")
-        item = item.replace(", ", ",")
-        remove_digits = str.maketrans('', '', digits)
-        item = item.translate(remove_digits)
-        item = item.rstrip()
-        item = item.split(",")
-        cleaned_bags.append(item)
 
     for listy in cleaned_bags:
         for bags in listy:
